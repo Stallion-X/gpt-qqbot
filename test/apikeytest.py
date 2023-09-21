@@ -1,18 +1,15 @@
 import datetime
-import openai
 import requests
 
+apikey = ""
 subscription_url = "https://api.openai.com/v1/dashboard/billing/subscription"
-session_key = "sess-"
+headers = {
+    "Authorization": "Bearer " + apikey,
+    "Content-Type": "application/json"
+}
 
 
 def get_remaining():
-    # apikey = openai.api_key
-    headers = {
-        # "Authorization": "Bearer " + apikey,
-        "Authorization": "Bearer " + session_key,
-        "Content-Type": "application/json"
-    }
     subscription_response = requests.get(subscription_url, headers=headers)
     if subscription_response.status_code == 200:
         data = subscription_response.json()
@@ -50,5 +47,4 @@ def get_remaining():
            f"\n" + recent
 
 
-if __name__ == '__main__':
-    print(get_remaining())
+print(get_remaining())
